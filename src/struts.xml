@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+    <constant name="struts.objectFactory" value="spring"></constant>
+ <package name="users" namespace="/" extends="struts-default">
+  
+  <action name="listUser" class="checkAction">
+   <result name="success" type = "chain">
+       <param name="actionName">listBook</param></result>
+  	 <result name = "error">/login.jsp</result>
+   <result name="input" type = "chain">
+       <param name="actionName">listUnchecked</param></result>
+  </action>
+  <action name = "listSingleUser" class = "Action.ListUserAction" method = "findSingle">
+      <result name = "success">/information.jsp</result>
+  </action>
+  <action name="saveUser" class="Action.ListUserAction" method = "save">
+   <result name="success">/login.jsp</result>
+  </action>
+  <action  name = "saveBook" class ="Action.ListBookAction" method = "save">
+      <result name="success" type = "chain">
+       <param name="actionName">listBook</param>
+       </result>
+       <interceptor-ref name="defaultStack">
+        <param name="fileUpload.maximumSize">100000</param>
+        <param name="fileUpload.allowedTypesSet">image/gif,image/jpeg,image/png</param>
+    </interceptor-ref>
+  </action>
+  <action  name = "listBook" class = "Action.ListBookAction">
+      <result name = "success">/product.jsp</result>
+  </action>
+  <action  name = "listBookName" class="Action.ListBookAction" method = "findByName">
+      <result name = "success">/product.jsp</result>
+  </action>
+  <action name = "listBookPublish" class = "Action.ListBookAction" method = "findByPublish">
+      <result name = "success">/product.jsp</result>
+  </action>
+   <action name = "listBookAuthor" class = "Action.ListBookAction" method = "findByAuthor">
+      <result name = "success">/product.jsp</result>
+  </action>
+  <action name ="listSingleBook" class = "Action.ListBookAction" method = "findSingle">
+      <result name = "success" type = "chain"><param name = "actionName">listComments</param></result>
+  </action>
+  <action name="listBookCategory" class  ="Action.ListBookAction" method = "findByCategory">
+       <result name = "success">/product.jsp</result>
+  </action>
+  <action name ="saveItem" class = "listItemAction">
+       <result name="success" type = "chain">
+       <param name="actionName">listBook</param></result>
+       <result name = "error">/product.jsp</result>
+  </action>
+  <action name = "listItem" class = "listItemAction" method = "findByUserName">
+      <result name = "success">/shopCart.jsp</result>
+  </action>
+  <action name = "deleteItem" class = "listItemAction" method = "delete">
+      <result name="success" type = "chain">
+       <param name="actionName">listItem</param></result>
+  </action>
+  <action name="listBookByPrice" class = "Action.ListBookAction" method = "findByPrice">
+      <result name = "success">/product.jsp</result>
+  </action>
+   <action name = "getUpdateUser" class = "Action.ListUserAction" method = "getUpdate">
+      <result name = "success">/update.jsp</result>
+  </action>
+   <action name = "updateUser" class = "Action.ListUserAction" method = "update">
+      <result name = "success">/login.jsp</result>
+  </action>
+  <action name="offLine" class = "Action.ListUserAction" method = "offline">
+      <result name  ="success">/login.jsp</result>
+  </action>
+  <action name="offManager" class = "offAction" method = "offManager">
+      <result name  ="success">/login.jsp</result>
+  </action>
+   <action name = "listUnchecked" class ="listUncheckedAction" method = "findUnchecked">
+      <result name ="success">/comments.jsp</result>
+  </action>
+  <action name = "listComments" class="listCommentsAction">
+      <result name ="success">/single.jsp</result>
+  </action>
+   <action name = "check" class = "checkCommentsAction" method = "check">
+      <result name="success" type = "chain">
+       <param name="actionName">listUnchecked</param></result>
+  </action>
+  <action name="findPassword" class="Action.ListUserAction" method="findpassword">
+   <result name="success">/login.jsp</result>
+   <result name = "error">/find.jsp</result>
+  </action>
+  <action  name = "listAllPurchase" class = "purchaseShowAction" method="listAllPurchase">
+      <result name = "success">/information.jsp</result>
+  </action>
+    <action  name = "listPurchase" class = "purchaseShowAction" method="listPurchase">
+      <result name = "success">/information.jsp</result>
+  </action>
+  <action name = "purchase" class = "purchaseAction" method = "purchase">
+      <result name = "success" type = "chain"><param name="actionName">listBook</param></result>
+  </action>
+  <action name = "saveComments" class = "saveCommentsAction" method = "getComment">
+      <result name = "success">/information.jsp</result>
+  </action>
+  <action name = "deleteUser" class = "deleteUserAction" method = "delete">
+      <result name = "success">/comments.jsp</result>
+  </action>
+ </package>
+</struts>
